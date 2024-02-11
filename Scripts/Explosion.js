@@ -13,6 +13,7 @@ class Explosion {
 
         explosionMesh.position.set(position.x,position.y,0);
 
+        this.isActive = true;
         this.explosion.add(explosionMesh);
         this.lastTime = Date.now();
         this.cooldown = initCooldown;
@@ -27,6 +28,7 @@ class Explosion {
         this.cooldown -= deltaTime;
 
         if (this.cooldown <= 0) {
+            this.isActive = false;
             scene.remove(this.explosion);
             this.explosion = null;
         }

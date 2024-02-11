@@ -1,6 +1,7 @@
 import  * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from "/Scripts/Scene.js";
 import {Explosion} from "/Scripts/Explosion.js";
+import { addExplosion, addBomb } from "/Scripts/GameManager.js";
 
 class Bomb {
     constructor(initCooldown, position) {
@@ -36,6 +37,9 @@ class Bomb {
 
             const explosionInstance  = new Explosion(2, this.position);
             scene.add(explosionInstance.explosion);
+
+            addExplosion(explosionInstance);
+            addBomb();
         }
     }
 }
