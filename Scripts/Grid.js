@@ -4,7 +4,7 @@ import { scene } from '/Scripts/Scene.js';
 
 /*
 const geometry = new THREE.BoxGeometry(1,1,1);
-const texture = new THREE.TextureLoader().load('/ressources/diamond.jpg');
+const texture = new THREE.TextureLoader().load('/ressources/rock.jpg');
 const material = new THREE.MeshBasicMaterial({map:texture});
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);

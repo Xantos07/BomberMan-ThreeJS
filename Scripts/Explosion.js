@@ -2,18 +2,46 @@ import  * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from "/Scripts/Scene.js";
 
 class Explosion {
-    constructor(initCooldown, position) {
+    constructor(initCooldown, position, range) {
 
         this.explosion = new THREE.Group();
 
-        const explosionMesh = new THREE.Mesh(
-            new THREE.BoxGeometry(0.5, 0.5, 0.5),
-            new THREE.MeshBasicMaterial({ map:  new THREE.TextureLoader().load('/ressources/Explosion.jpg') })
-        );
+        //Position
+        let posXAround = Math.round(position.x);
+        let posYAround = Math.round(position.y);
 
-        explosionMesh.position.set(position.x,position.y,0);
+        console.log(posXAround, posYAround);
+        for (let x = -range; x <= range; x++) {
 
-        this.explosion.add(explosionMesh);
+            const explosionMesh = new THREE.Mesh(
+                new THREE.BoxGeometry(1, 1, 1),
+                new THREE.MeshBasicMaterial({ map:  new THREE.TextureLoader().load('/ressources/Explosion.jpg') })
+            );
+
+            let posX = posXAround + x;
+            console.log((posXAround + x), (position.y));
+            explosionMesh.position.set(posX,position.y,0);
+
+            this.explosion.add(explosionMesh);
+        }
+
+        for (let y = -range; y <= range; y++) {
+
+            const explosionMesh = new THREE.Mesh(
+
+                new THREE.BoxGeometry(1, 1, 1),
+                new THREE.MeshBasicMaterial({ map:  new THREE.TextureLoader().load('/ressources/Explosion.jpg') })
+            );
+
+            let posY = posYAround + y;
+
+            explosionMesh.position.set(position.x,posY,0);
+
+            this.explosion.add(explosionMesh);
+        }
+
+
+        this.isActive = true;
         this.lastTime = Date.now();
         this.cooldown = initCooldown;
     }
@@ -27,6 +55,7 @@ class Explosion {
         this.cooldown -= deltaTime;
 
         if (this.cooldown <= 0) {
+            this.isActive = false;
             scene.remove(this.explosion);
             this.explosion = null;
         }

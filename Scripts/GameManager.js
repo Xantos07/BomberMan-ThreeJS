@@ -1,8 +1,8 @@
 import  * as THREE from '/node_modules/three/build/three.module.js'
 import { Player} from '/Scripts/Player.js';
+import { GetMovementDirection  } from '/Scripts/Input.js';
 import { scene, renderer } from '/Scripts/Scene.js';
 import {camera} from "/Scripts/Camera.js";
-import { GetMovementDirection  } from '/Scripts/Input.js';
 import {unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
 
@@ -19,8 +19,15 @@ let nBomb = 1;
 const nBombMax = 1;
 
 let bombs = [];
-let explosion = [];
+let explosions = [];
 
+function addExplosion(explosionInstance) {
+    explosions.push(explosionInstance);
+}
+
+function addBomb() {
+    nBomb++;
+}
 function isPlayerCollidingWithBlock(player, block)
 {
     if(block == null) return false;
@@ -84,19 +91,17 @@ function PlayerSetCollision() {
             if (typeof unbreakableBlockList[indexX][indexY] === 'undefined') continue
 
             //Part of visualisation of range collision
-            const geometry = new THREE.Mesh(
+            /*const geometry = new THREE.Mesh(
                 new THREE.BoxGeometry(1, 1, 1),
                 new THREE.MeshBasicMaterial({ color: 0xFFA39C })
             );
 
             geometry.position.set(i + posXAround,j + posYAround, 0);
             drawnBlocks.push(geometry)
-            scene.add(geometry);
+            scene.add(geometry);*/
 //
 
             if (isPlayerCollidingWithBlock(player, unbreakableBlockList[indexX][indexY])) {
-
-                console.log('Collision avec le bloc détectée!');
 
                 player.position.x = posXAround;
                 player.position.y = posYAround;
@@ -119,6 +124,16 @@ function BombsTick(){
     }
 }
 
+function ExplosionsTick(){
+
+    explosions = explosions.filter(explosion => explosion.isActive);
+
+    for (let i = 0; i < explosions.length; i++) {
+        explosions[i].ExplosionCoolDown();
+    }
+}
+
+
 loop();
 
 function loop()
@@ -128,6 +143,7 @@ function loop()
     updatePlayer();
 
     BombsTick();
+    ExplosionsTick();
 
     renderer.render(scene, camera)
 
@@ -136,3 +152,5 @@ function loop()
         scene.remove(drawnBlocks[i]);
     }
 }
+
+export { addBomb,explosions, addExplosion };
