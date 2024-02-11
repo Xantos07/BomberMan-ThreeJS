@@ -5,7 +5,6 @@ import { scene, renderer } from '/Scripts/Scene.js';
 import {camera} from "/Scripts/Camera.js";
 import {unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
-import { Explosion } from "/Scripts/Explosion.js";
 
 const player = Player();
 player.position.set(-5,5,0);

@@ -35,7 +35,7 @@ class Bomb {
             this.bomb = null;
             this.isActive = false;
 
-            const explosionInstance  = new Explosion(2, this.position);
+            const explosionInstance  = new Explosion(2, this.position, 2);
             scene.add(explosionInstance.explosion);
 
             addExplosion(explosionInstance);
