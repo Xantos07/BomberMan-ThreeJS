@@ -1,14 +1,14 @@
 import * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from '/Scripts/Scene.js';
+import {GameData} from '/Scripts/GameSetup.js';
 import {Tile} from "/Scripts/Tile.js";
 import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
 import {BreakableBlock} from "/Scripts/BreakableBlock.js";
 
-const blockCountX = 13; //blockCountX = blockCountY
-const blockCountY = 13;
-const blockSize = 1;
-const blockRadius = blockSize / 2;
-const offSet = (blockCountX - 1) / 2; //Offset is an indicator of the difference between one's position in the world and one's position in the table
+const blockCountX = GameData.blockCountX;
+const blockCountY = GameData.blockCountY;
+const blockSize = GameData.blockSize;
+const blockRadius = GameData.blockRadius;
 
 const tiles = [,];
 const unbreakableBlockList = [,];
@@ -133,6 +133,6 @@ function checkIsOutside(x, y) {
     return false;
 }
 
-export {blockRadius, offSet,unbreakableBlockList, tiles, checkIsOutside};
+export {unbreakableBlockList, tiles, checkIsOutside};
 
 

@@ -1,9 +1,10 @@
 import  * as THREE from '/node_modules/three/build/three.module.js'
+import { GameData} from '/Scripts/GameSetup.js';
 import { Player} from '/Scripts/Player.js';
 import { GetMovementDirection  } from '/Scripts/Input.js';
 import { scene, renderer } from '/Scripts/Scene.js';
 import {camera} from "/Scripts/Camera.js";
-import {blockRadius,unbreakableBlockList} from "/Scripts/Grid.js";
+import {unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
 
 //Player Init
@@ -41,7 +42,7 @@ function isPlayerCollidingWithBlock(player, block)
 
     const distance = playerPosition.distanceTo(blockPosition);
 
-    return distance <  0.5 + blockRadius;
+    return distance <  0.5 + GameData.blockRadius;
 }
 
 //Player Action
