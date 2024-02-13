@@ -3,7 +3,7 @@ import { Player} from '/Scripts/Player.js';
 import { GetMovementDirection  } from '/Scripts/Input.js';
 import { scene, renderer } from '/Scripts/Scene.js';
 import {camera} from "/Scripts/Camera.js";
-import {unbreakableBlockList} from "/Scripts/Grid.js";
+import {blockRadius,unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
 
 //Player Init
@@ -16,11 +16,6 @@ scene.add(player);
 //
 //
 
-const blockCountX = 13; //blockCountX = blockCountY
-const blockCountY = 13;
-const blockSize = 1;
-const blockRadius = blockSize / 2;
-const offSet = (blockCountX - 1) / 2; //Offset is an indicator of the difference between one's position in the world and one's position in the table
 
 let nBomb = 1;
 const nBombMax = 1;
@@ -148,4 +143,4 @@ function loop()
     renderer.render(scene, camera)
 }
 
-export { addBomb, explosions, addExplosion };
+export {  addBomb, addExplosion, explosions };

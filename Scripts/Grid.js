@@ -4,13 +4,11 @@ import {Tile} from "/Scripts/Tile.js";
 import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
 import {BreakableBlock} from "/Scripts/BreakableBlock.js";
 
-const light = new THREE.PointLight(0xeeeeee);
-scene.add(light);
-light.position.set(0, 0, 2);
-
-const blockCountX = 13;
+const blockCountX = 13; //blockCountX = blockCountY
 const blockCountY = 13;
 const blockSize = 1;
+const blockRadius = blockSize / 2;
+const offSet = (blockCountX - 1) / 2; //Offset is an indicator of the difference between one's position in the world and one's position in the table
 
 const tiles = [,];
 const unbreakableBlockList = [,];
@@ -135,6 +133,6 @@ function checkIsOutside(x, y) {
     return false;
 }
 
-export {unbreakableBlockList, tiles, checkIsOutside};
+export {blockRadius, offSet,unbreakableBlockList, tiles, checkIsOutside};
 
 
