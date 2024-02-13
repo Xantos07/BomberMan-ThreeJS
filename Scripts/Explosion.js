@@ -1,5 +1,6 @@
 import * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from "/Scripts/Scene.js";
+import {ressourcesPaths} from "/Scripts/RessourcesPaths.js";
 import {tiles, checkIsOutside, unbreakableBlockList} from "/Scripts/Grid.js";
 import {BreakableBlock} from "/Scripts/BreakableBlock.js";
 import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
@@ -54,7 +55,7 @@ class Explosion {
 
                 const explosionMesh = new THREE.Mesh(
                     new THREE.BoxGeometry(1, 1, 1),
-                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('/ressources/Explosion.jpg') })
+                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(ressourcesPaths.explosion) })
                 );
 
                 explosionMesh.position.set(posX, posY, 0);

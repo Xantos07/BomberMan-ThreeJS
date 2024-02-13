@@ -1,9 +1,10 @@
 import {Block} from "/Scripts/Block.js";
 import {scene} from "/Scripts/Scene.js";
+import {ressourcesPaths} from "/Scripts/RessourcesPaths.js";
 class BreakableBlock extends Block {
 
     constructor(position) {
-        super(position, '/ressources/breakableBlock.jpg');
+        super(position, ressourcesPaths.breakableBlock);
     }
 
     //Destroy
