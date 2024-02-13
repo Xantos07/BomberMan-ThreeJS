@@ -6,6 +6,7 @@ import {camera} from "/Scripts/Camera.js";
 import {unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
 
+
 const player = Player();
 player.position.set(-5,5,0);
 scene.add(player);
