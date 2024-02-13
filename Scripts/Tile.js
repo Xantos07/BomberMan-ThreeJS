@@ -1,8 +1,11 @@
 class Tile {
-    constructor(x, y, isEmpty) {
+
+    // Coordinate, Empty, Type of block
+    constructor(x, y, isEmpty, block) {
         this.x = x;
         this.y = y;
         this.isEmpty = isEmpty;
+        this.block = block;
     }
 }
 
