@@ -91,17 +91,6 @@ function PlayerSetCollision() {
 
             if (typeof unbreakableBlockList[indexX][indexY] === 'undefined') continue
 
-            //Part of visualisation of range collision
-            /*const geometry = new THREE.Mesh(
-                new THREE.BoxGeometry(1, 1, 1),
-                new THREE.MeshBasicMaterial({ color: 0xFFA39C })
-            );
-
-            geometry.position.set(i + posXAround,j + posYAround, 0);
-            drawnBlocks.push(geometry)
-            scene.add(geometry);*/
-//
-
             if (isPlayerCollidingWithBlock(player, unbreakableBlockList[indexX][indexY])) {
 
                 player.position.x = posXAround;
