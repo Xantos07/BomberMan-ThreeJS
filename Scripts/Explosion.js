@@ -13,12 +13,12 @@ class Explosion {
 
         console.log(posXAround, posYAround);
 
+        //Right
+        for (let x = 0; x <= range; x++) {
 
-        for (let x = -range; x <= range; x++) {
-
-            if (checkIsOutside((posXAround + x + 6), (position.y + 6)) ||
-                !tiles[posXAround + x + 6][position.y + 6].isEmpty) {
-                continue
+            if (checkIsOutside((posXAround + x + 6), (posYAround + 6)) ||
+                !tiles[posXAround + x + 6][posYAround + 6].isEmpty) {
+                break
             }
 
             const explosionMesh = new THREE.Mesh(
@@ -28,16 +28,38 @@ class Explosion {
 
 
             let posX = posXAround + x;
-            explosionMesh.position.set(posX, position.y, 0);
+            explosionMesh.position.set(posX, posYAround, 0);
 
             this.explosion.add(explosionMesh);
         }
 
-        for (let y = -range; y <= range; y++) {
 
-            if (checkIsOutside((position.x + 6), (posYAround + y + 6)) ||
-                !tiles[position.x + 6][posYAround + y + 6].isEmpty) {
-                continue
+        //Left
+        for (let x = 0; x >= -range; x--) {
+
+            if (checkIsOutside((posXAround + x + 6), (posYAround + 6)) ||
+                !tiles[posXAround + x + 6][posYAround + 6].isEmpty) {
+                break
+            }
+
+            const explosionMesh = new THREE.Mesh(
+                new THREE.BoxGeometry(1, 1, 1),
+                new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('/ressources/Explosion.jpg')})
+            );
+
+
+            let posX = posXAround + x;
+            explosionMesh.position.set(posX, posYAround, 0);
+
+            this.explosion.add(explosionMesh);
+        }
+
+        //Up
+        for (let y = 0; y <= range; y++) {
+
+            if (checkIsOutside((posXAround + 6), (posYAround + y + 6)) ||
+                !tiles[posXAround + 6][posYAround + y + 6].isEmpty) {
+                break
             }
 
             const explosionMesh = new THREE.Mesh(
@@ -47,7 +69,27 @@ class Explosion {
 
             let posY = posYAround + y;
 
-            explosionMesh.position.set(position.x, posY, 0);
+            explosionMesh.position.set(posXAround, posY, 0);
+
+            this.explosion.add(explosionMesh);
+
+        }
+        //Down
+        for (let y = 0; y >= -range; y--) {
+
+            if (checkIsOutside((posXAround + 6), (posYAround + y + 6)) ||
+                !tiles[posXAround + 6][posYAround + y + 6].isEmpty) {
+                break
+            }
+
+            const explosionMesh = new THREE.Mesh(
+                new THREE.BoxGeometry(1, 1, 1),
+                new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('/ressources/Explosion.jpg')})
+            );
+
+            let posY = posYAround + y;
+
+            explosionMesh.position.set(posXAround, posY, 0);
 
             this.explosion.add(explosionMesh);
         }
