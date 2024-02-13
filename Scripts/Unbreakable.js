@@ -7,3 +7,5 @@ class UnbreakableBlock extends Block {
 
     //Cant destroys this
 }
+
+export {UnbreakableBlock}

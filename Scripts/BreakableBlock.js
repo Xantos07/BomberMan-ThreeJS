@@ -1,5 +1,5 @@
 import {Block} from "/Scripts/Block.js";
-import {scene} from "/Scripts/Scene";
+import {scene} from "/Scripts/Scene.js";
 
 class BreakableBlock extends Block {
 
@@ -13,3 +13,5 @@ class BreakableBlock extends Block {
         scene.remove(this.block);
     }
 }
+
+export {BreakableBlock}

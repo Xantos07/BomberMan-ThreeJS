@@ -1,6 +1,8 @@
 import * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from '/Scripts/Scene.js';
 import {Tile} from "/Scripts/Tile.js";
+import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
+import {BreakableBlock} from "/Scripts/BreakableBlock.js";
 
 const light = new THREE.PointLight(0xeeeeee);
 scene.add(light);
@@ -33,18 +35,19 @@ for (let i = 0; i < blockCountX; i++) {
             continue
         }
 
-        const geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
-        const texture = new THREE.TextureLoader().load('/ressources/stone.jpg');
-        const material = new THREE.MeshBasicMaterial({map: texture});
-        const mesh = new THREE.Mesh(geometry, material);
+        const position = new THREE.Vector3(
+            i * blockSize - (blockCountX * blockSize) / 2 + 0.5,
+            j * blockSize - (blockCountY * blockSize) / 2 + 0.5,
+            0
+        );
+        const block = new UnbreakableBlock(position);
 
-        mesh.position.set((i * blockSize - (blockCountX * blockSize) / 2) + 0.5, (j * blockSize - (blockCountY * blockSize) / 2) + 0.5, 0);
-        unbreakableBlockList[i][j] = mesh;
+        unbreakableBlockList[i][j] = block;
 
         tiles[i][j].isEmpty = false;
-        tiles[i][j].block = false;
+        tiles[i][j].block = block;
 
-        scene.add(mesh);
+        scene.add(block.block);
     }
 }
 
@@ -57,15 +60,16 @@ for (let i = 1; i < blockCountX; i++) {
         }
 
         if (i % 2 && j % 2) {
-            const geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
-            const texture = new THREE.TextureLoader().load('/ressources/stone.jpg');
-            const material = new THREE.MeshBasicMaterial({map: texture});
-            const mesh = new THREE.Mesh(geometry, material);
 
-            mesh.position.set((i * blockSize - (blockCountX * blockSize) / 2) + 1.5, (j * blockSize - (blockCountY * blockSize) / 2) + 1.5, 0);
+            const position = new THREE.Vector3(
+                i * blockSize - (blockCountX * blockSize) / 2 + 1.5,
+                j * blockSize - (blockCountY * blockSize) / 2 + 1.5,
+                0
+            );
+            const block = new UnbreakableBlock(position);
 
-            //+ 1 par rapport a + 1.5 (servant a centrer la grid)
-            unbreakableBlockList[i + 1][j + 1] = mesh;
+            //+1 par rapport a + 1.5 (servant a centrer la grid)
+            unbreakableBlockList[i + 1][j + 1] = block;
 
             const indexToRemove = emptySpace.findIndex(coord => coord[0] === i + 1 && coord[1] === j + 1);
             if (indexToRemove !== -1) {
@@ -73,7 +77,8 @@ for (let i = 1; i < blockCountX; i++) {
             }
 
             tiles[i + 1][j + 1].isEmpty = false;
-            scene.add(mesh);
+            tiles[i + 1][j + 1].block = block;
+            scene.add(block.block);
             continue
         }
     }
@@ -90,22 +95,24 @@ emptySpace.splice(emptySpace.findIndex(coord => coord[0] === 11 && coord[1] === 
 emptySpace.splice(emptySpace.findIndex(coord => coord[0] === 10 && coord[1] === 1), 1);
 
 let nbBloc = Math.floor(emptySpace.length * 0.75)
+
 //Creation breakable blocks
 while (nbBloc > 0) {
 
     const randomIndex = Math.floor(Math.random() * emptySpace.length);
     const randomElement = emptySpace[randomIndex];
 
-    const geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
-    const texture = new THREE.TextureLoader().load('/ressources/breakableBlock.jpg');
-    const material = new THREE.MeshBasicMaterial({map: texture});
-    const mesh = new THREE.Mesh(geometry, material);
-
-    mesh.position.set((randomElement[0] * blockSize - (blockCountX * blockSize) / 2) + 0.5, (randomElement[1] * blockSize - (blockCountY * blockSize) / 2) + 0.5, 0);
-    scene.add(mesh);
+    const position = new THREE.Vector3(
+        randomElement[0] * blockSize - (blockCountX * blockSize) / 2 + 0.5,
+        randomElement[1] * blockSize - (blockCountY * blockSize) / 2 + 0.5,
+        0
+    );
+    const block = new BreakableBlock(position);
+    scene.add(block.block);
 
     nbBloc -= 1
-    unbreakableBlockList[randomElement[0]][randomElement[1]] = mesh;
+
+    unbreakableBlockList[randomElement[0]][randomElement[1]] = block;
     //
     const indexToRemove = emptySpace.findIndex(coord => coord[0] === randomElement[0] && coord[1] === randomElement[1]);
 
@@ -114,7 +121,6 @@ while (nbBloc > 0) {
     }
 
     tiles[randomElement[0]][randomElement[1]].isEmpty = false;
-    console.log(emptySpace.length)
 }
 
 function checkIsOutside(x, y) {
