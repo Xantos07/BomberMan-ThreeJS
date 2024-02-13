@@ -1,6 +1,6 @@
 import * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from "/Scripts/Scene.js";
-import {tiles, checkIsOutside} from "/Scripts/Grid.js";
+import {tiles, checkIsOutside, unbreakableBlockList} from "/Scripts/Grid.js";
 import {BreakableBlock} from "/Scripts/BreakableBlock.js";
 import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
 
@@ -42,7 +42,13 @@ class Explosion {
                 }
 
                 if (tile.block instanceof BreakableBlock && !tile.isEmpty) {
+                    //Refresh View
                     tile.block.Break();
+
+                    //Refresh Data
+                    tiles.isEmpty = true;
+                    tiles[tile.x][tile.y].block = null;
+                    unbreakableBlockList[tile.x][tile.y] = null;
                     break;
                 }
 
