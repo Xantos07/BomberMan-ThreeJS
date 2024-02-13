@@ -6,15 +6,21 @@ import {camera} from "/Scripts/Camera.js";
 import {unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
 
-
+//Player Init
 const player = Player();
 player.position.set(-5,5,0);
 scene.add(player);
 
-const blockCountX = 13;
+//IA Init
+//
+//
+//
+
+const blockCountX = 13; //blockCountX = blockCountY
 const blockCountY = 13;
 const blockSize = 1;
 const blockRadius = blockSize / 2;
+const offSet = (blockCountX - 1) / 2; //Offset is an indicator of the difference between one's position in the world and one's position in the table
 
 let nBomb = 1;
 const nBombMax = 1;
@@ -29,6 +35,8 @@ function addExplosion(explosionInstance) {
 function addBomb() {
     nBomb++;
 }
+
+//Collision with Circle
 function isPlayerCollidingWithBlock(player, block)
 {
     if(block == null) return false;
@@ -41,6 +49,7 @@ function isPlayerCollidingWithBlock(player, block)
     return distance <  0.5 + blockRadius;
 }
 
+//Player Action
 function updatePlayer()
 {
     //Part of movement/action player
@@ -74,7 +83,7 @@ function updatePlayer()
     }
 
 }
-const drawnBlocks = [];
+
 function PlayerSetCollision() {
     for (let i = -1; i <= 1; i++) {
 
@@ -126,6 +135,7 @@ function ExplosionsTick(){
 
 loop();
 
+//includes all our elements to be displayed and timed
 function loop()
 {
     requestAnimationFrame(loop);
@@ -136,11 +146,6 @@ function loop()
     ExplosionsTick();
 
     renderer.render(scene, camera)
-
-    //Part of refresh visualisation of range collision
-    for (let i = 0; i < drawnBlocks.length; i++) {
-        scene.remove(drawnBlocks[i]);
-    }
 }
 
-export { addBomb,explosions, addExplosion };
+export { addBomb, explosions, addExplosion };
