@@ -107,7 +107,11 @@ while (nbBloc > 0) {
         randomElement[1] * blockSize - (blockCountY * blockSize) / 2 + 0.5,
         0
     );
+
     const block = new BreakableBlock(position);
+
+    tiles[randomElement[0]][randomElement[1]].isEmpty = false;
+    tiles[randomElement[0]][randomElement[1]].block = block;
     scene.add(block.block);
 
     nbBloc -= 1
@@ -120,7 +124,6 @@ while (nbBloc > 0) {
         emptySpace.splice(indexToRemove, 1);
     }
 
-    tiles[randomElement[0]][randomElement[1]].isEmpty = false;
 }
 
 function checkIsOutside(x, y) {
