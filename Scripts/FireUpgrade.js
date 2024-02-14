@@ -1,8 +1,9 @@
 import {Upgrade} from "/Scripts/Upgrade.js";
+import {ressourcesPaths} from "/Scripts/RessourcesPaths.js";
 
 class FireUpgrade extends Upgrade {
-    constructor(position, texturePath) {
-        super(position, texturePath);
+    constructor(position) {
+        super(position, ressourcesPaths.fireUpgrade);
     }
 
     GetUpgrade() {
