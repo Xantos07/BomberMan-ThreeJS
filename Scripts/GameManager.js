@@ -17,7 +17,6 @@ scene.add(player);
 //
 //
 
-
 let nBomb = 1;
 let range = GameData.range;
 

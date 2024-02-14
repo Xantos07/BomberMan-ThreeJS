@@ -4,6 +4,7 @@ import {GameData} from '/Scripts/GameSetup.js';
 import {Tile} from "/Scripts/Tile.js";
 import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
 import {BreakableBlock} from "/Scripts/BreakableBlock.js";
+import {FireUpgrade} from "/Scripts/FireUpgrade.js";
 
 const blockCountX = GameData.blockCountX;
 const blockCountY = GameData.blockCountY;
@@ -12,7 +13,9 @@ const blockRadius = GameData.blockRadius;
 
 const tiles = [,];
 const unbreakableBlockList = [,];
-const emptySpace = [];
+
+const emptySpace = []; // for breakable blocks
+const breakableSpace = []; // for upgrades
 
 for (let x = 0; x < blockCountX; x++) {
     tiles[x] = [];
@@ -92,10 +95,10 @@ emptySpace.splice(emptySpace.findIndex(coord => coord[0] === 11 && coord[1] === 
 emptySpace.splice(emptySpace.findIndex(coord => coord[0] === 11 && coord[1] === 2), 1);
 emptySpace.splice(emptySpace.findIndex(coord => coord[0] === 10 && coord[1] === 1), 1);
 
-let nbBloc = Math.floor(emptySpace.length * 0.75)
+let nbBreakableBlock = Math.floor(emptySpace.length * 0.75)
 
 //Creation breakable blocks
-while (nbBloc > 0) {
+while (nbBreakableBlock > 0) {
 
     const randomIndex = Math.floor(Math.random() * emptySpace.length);
     const randomElement = emptySpace[randomIndex];
@@ -112,17 +115,45 @@ while (nbBloc > 0) {
     tiles[randomElement[0]][randomElement[1]].block = block;
     scene.add(block.block);
 
-    nbBloc -= 1
+    nbBreakableBlock -= 1
+    breakableSpace.push([randomElement[0],randomElement[1]]);
 
     unbreakableBlockList[randomElement[0]][randomElement[1]] = block;
-    //
+
     const indexToRemove = emptySpace.findIndex(coord => coord[0] === randomElement[0] && coord[1] === randomElement[1]);
 
     if (indexToRemove !== -1) {
         emptySpace.splice(indexToRemove, 1);
     }
-
 }
+
+//a temporary solution for testing upgrades
+let nbUpgrade = Math.floor(breakableSpace.length * 0.20)
+while (nbUpgrade > 0) {
+
+    const randomIndex = Math.floor(Math.random() * breakableSpace.length);
+    const randomElement = breakableSpace[randomIndex];
+
+    const position = new THREE.Vector3(
+        randomElement[0] * blockSize - (blockCountX * blockSize) / 2 + 0.5,
+        randomElement[1] * blockSize - (blockCountY * blockSize) / 2 + 0.5,
+        0
+    );
+
+    console.log(position)
+    const upgrade = new FireUpgrade(position);
+    scene.add(upgrade.upgrade);
+
+    nbUpgrade -= 1
+
+    const indexToRemove = breakableSpace.findIndex(coord => coord[0] === randomElement[0] && coord[1] === randomElement[1]);
+
+    if (indexToRemove !== -1) {
+        breakableSpace.splice(indexToRemove, 1);
+    }
+}
+
+//
 
 function checkIsOutside(x, y) {
 
