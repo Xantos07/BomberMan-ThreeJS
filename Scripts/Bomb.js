@@ -4,7 +4,7 @@ import {Explosion} from "/Scripts/Explosion.js";
 import { addExplosion, addBomb } from "/Scripts/GameManager.js";
 
 class Bomb {
-    constructor(initCooldown, position) {
+    constructor(initCooldown, position, range) {
 
         this.bomb = new THREE.Group();
 
@@ -14,6 +14,7 @@ class Bomb {
         );
         bombMesh.position.set(position.x,position.y,0);
 
+        this.range = range;
         this.isActive = true;
         this.position = bombMesh.position;
         this.bomb.add(bombMesh);
@@ -35,7 +36,7 @@ class Bomb {
             this.bomb = null;
             this.isActive = false;
 
-            const explosionInstance  = new Explosion(2, this.position, 2);
+            const explosionInstance  = new Explosion(2, this.position, this.range);
             scene.add(explosionInstance.explosion);
 
             addExplosion(explosionInstance);

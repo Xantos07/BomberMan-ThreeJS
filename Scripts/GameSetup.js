@@ -17,9 +17,10 @@ const GameData = {
 
     // AI
     aiStartPosX: 5,
-    aiStartPosY: -5
+    aiStartPosY: -5,
 
     //Bomb
+    range : 2
 };
 
 export {GameData};

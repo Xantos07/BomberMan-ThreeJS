@@ -19,7 +19,7 @@ scene.add(player);
 
 
 let nBomb = 1;
-const nBombMax = 1;
+let range = GameData.range;
 
 let bombs = [];
 let explosions = [];
@@ -69,7 +69,7 @@ function updatePlayer()
         case 'placeBomb':
             if(nBomb > 0)
             {
-                const bombInstance  = new Bomb(2, player.position);
+                const bombInstance  = new Bomb(2, player.position, range);
                 scene.add(bombInstance.bomb);
                 bombs.push(bombInstance);
                 nBomb -= 1;
