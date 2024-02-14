@@ -15,12 +15,12 @@
 
 import  * as THREE from '/node_modules/three/build/three.module.js'
 
-//Abstract class
+
 class Upgrade {
     constructor(position, texturePath) {
         this.upgrade = new THREE.Group();
 
-        const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+        const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
         const texture = new THREE.TextureLoader().load(texturePath);
         const material = new THREE.MeshBasicMaterial({ map: texture });
         const upgradeMesh = new THREE.Mesh(geometry, material);
@@ -29,11 +29,6 @@ class Upgrade {
 
         this.position = upgradeMesh.position;
         this.upgrade.add(upgradeMesh);
-    }
-
-    //Abstract
-    GetUpdrade() {
-
     }
 }
 

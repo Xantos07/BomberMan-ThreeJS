@@ -20,7 +20,7 @@ const breakableSpace = []; // for upgrades
 for (let x = 0; x < blockCountX; x++) {
     tiles[x] = [];
     for (let y = 0; y < blockCountX; y++) {
-        const tileInstance = new Tile(x, y, false, null);
+        const tileInstance = new Tile(x, y, false, null, null);
         tiles[x][y] = tileInstance;
         tiles[x][y].isEmpty = true;
     }
@@ -140,8 +140,8 @@ while (nbUpgrade > 0) {
         0
     );
 
-    console.log(position)
     const upgrade = new FireUpgrade(position);
+    tiles[randomElement[0]][randomElement[1]].upgrade = upgrade;
     scene.add(upgrade.upgrade);
 
     nbUpgrade -= 1

@@ -4,7 +4,7 @@ import { Player} from '/Scripts/Player.js';
 import { GetMovementDirection  } from '/Scripts/Input.js';
 import { scene, renderer } from '/Scripts/Scene.js';
 import {camera} from "/Scripts/Camera.js";
-import {unbreakableBlockList} from "/Scripts/Grid.js";
+import {tiles, unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
 
 //Player Init
@@ -18,7 +18,6 @@ scene.add(player);
 //
 
 let nBomb = 1;
-let range = GameData.range;
 
 let bombs = [];
 let explosions = [];
@@ -32,7 +31,7 @@ function addBomb() {
 }
 
 //Collision with Circle
-function isPlayerCollidingWithBlock(player, block)
+function isPlayerCollidingElement(player, block)
 {
     if(block == null) return false;
 
@@ -68,7 +67,7 @@ function updatePlayer()
         case 'placeBomb':
             if(nBomb > 0)
             {
-                const bombInstance  = new Bomb(2, player.position, range);
+                const bombInstance  = new Bomb(2, player.position, GameData.range);
                 scene.add(bombInstance.bomb);
                 bombs.push(bombInstance);
                 nBomb -= 1;
@@ -95,7 +94,17 @@ function PlayerSetCollision() {
 
             if (typeof unbreakableBlockList[indexX][indexY] === 'undefined') continue
 
-            if (isPlayerCollidingWithBlock(player, unbreakableBlockList[indexX][indexY])) {
+            //collision with upgrade
+            if (isPlayerCollidingElement(player, tiles[indexX][indexY].upgrade)) {
+
+
+                tiles[indexX][indexY].upgrade.GetUpgrade();
+                //console.log(`upgrade : ${tiles[indexX][indexY].upgrade}`);
+                //tiles[indexX][indexY].upgrade.GetUpdgrade();
+            }
+
+            //collision with block
+            if (isPlayerCollidingElement(player, unbreakableBlockList[indexX][indexY])) {
 
                 player.position.x = posXAround;
                 player.position.y = posYAround;
