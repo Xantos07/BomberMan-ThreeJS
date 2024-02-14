@@ -1,16 +1,14 @@
 import * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from '/Scripts/Scene.js';
+import {GameData} from '/Scripts/GameSetup.js';
 import {Tile} from "/Scripts/Tile.js";
 import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
 import {BreakableBlock} from "/Scripts/BreakableBlock.js";
 
-const light = new THREE.PointLight(0xeeeeee);
-scene.add(light);
-light.position.set(0, 0, 2);
-
-const blockCountX = 13;
-const blockCountY = 13;
-const blockSize = 1;
+const blockCountX = GameData.blockCountX;
+const blockCountY = GameData.blockCountY;
+const blockSize = GameData.blockSize;
+const blockRadius = GameData.blockRadius;
 
 const tiles = [,];
 const unbreakableBlockList = [,];

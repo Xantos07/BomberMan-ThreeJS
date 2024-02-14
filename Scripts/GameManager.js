@@ -1,4 +1,5 @@
 import  * as THREE from '/node_modules/three/build/three.module.js'
+import { GameData} from '/Scripts/GameSetup.js';
 import { Player} from '/Scripts/Player.js';
 import { GetMovementDirection  } from '/Scripts/Input.js';
 import { scene, renderer } from '/Scripts/Scene.js';
@@ -6,18 +7,19 @@ import {camera} from "/Scripts/Camera.js";
 import {unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
 
-
+//Player Init
 const player = Player();
 player.position.set(-5,5,0);
 scene.add(player);
 
-const blockCountX = 13;
-const blockCountY = 13;
-const blockSize = 1;
-const blockRadius = blockSize / 2;
+//IA Init
+//
+//
+//
+
 
 let nBomb = 1;
-const nBombMax = 1;
+let range = GameData.range;
 
 let bombs = [];
 let explosions = [];
@@ -29,6 +31,8 @@ function addExplosion(explosionInstance) {
 function addBomb() {
     nBomb++;
 }
+
+//Collision with Circle
 function isPlayerCollidingWithBlock(player, block)
 {
     if(block == null) return false;
@@ -38,9 +42,10 @@ function isPlayerCollidingWithBlock(player, block)
 
     const distance = playerPosition.distanceTo(blockPosition);
 
-    return distance <  0.5 + blockRadius;
+    return distance <  0.5 + GameData.blockRadius;
 }
 
+//Player Action
 function updatePlayer()
 {
     //Part of movement/action player
@@ -64,7 +69,7 @@ function updatePlayer()
         case 'placeBomb':
             if(nBomb > 0)
             {
-                const bombInstance  = new Bomb(2, player.position);
+                const bombInstance  = new Bomb(2, player.position, range);
                 scene.add(bombInstance.bomb);
                 bombs.push(bombInstance);
                 nBomb -= 1;
@@ -74,7 +79,7 @@ function updatePlayer()
     }
 
 }
-const drawnBlocks = [];
+
 function PlayerSetCollision() {
     for (let i = -1; i <= 1; i++) {
 
@@ -126,6 +131,7 @@ function ExplosionsTick(){
 
 loop();
 
+//includes all our elements to be displayed and timed
 function loop()
 {
     requestAnimationFrame(loop);
@@ -136,11 +142,6 @@ function loop()
     ExplosionsTick();
 
     renderer.render(scene, camera)
-
-    //Part of refresh visualisation of range collision
-    for (let i = 0; i < drawnBlocks.length; i++) {
-        scene.remove(drawnBlocks[i]);
-    }
 }
 
-export { addBomb,explosions, addExplosion };
+export {  addBomb, addExplosion, explosions };
