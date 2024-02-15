@@ -5,7 +5,7 @@ import {scene} from "/Scripts/Scene.js";
 
 class BombingUpgrade extends Upgrade {
     constructor(position) {
-        super(position, ressourcesPaths.fireUpgrade);
+        super(position, ressourcesPaths.bombingUpgrade);
     }
 
     GetUpgrade() {
