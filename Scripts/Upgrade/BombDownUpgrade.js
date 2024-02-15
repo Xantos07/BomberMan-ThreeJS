@@ -11,7 +11,7 @@ class BombDownUpgrade extends Upgrade {
     GetUpgrade() {
 
         scene.remove(this.upgrade)
-
+        GameData.bombAmount--;
     }
 }
 

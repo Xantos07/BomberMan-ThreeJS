@@ -11,7 +11,7 @@ class SkateUpgrade extends Upgrade {
     GetUpgrade() {
 
         scene.remove(this.upgrade)
-
+        GameData.playerSpeed = GameData.playerSpeed*1.50;
     }
 }
 

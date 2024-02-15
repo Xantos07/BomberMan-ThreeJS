@@ -11,7 +11,7 @@ class BoxingGloveUpgrade extends Upgrade {
     GetUpgrade() {
 
         scene.remove(this.upgrade)
-
+//specificCapacity
     }
 }
 

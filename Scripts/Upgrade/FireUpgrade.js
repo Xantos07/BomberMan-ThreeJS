@@ -10,7 +10,7 @@ class FireUpgrade extends Upgrade {
 
     GetUpgrade() {
 
-        GameData.range++;
+        GameData.bombRange++;
         scene.remove(this.upgrade)
 
     }

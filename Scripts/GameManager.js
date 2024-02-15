@@ -17,8 +17,6 @@ scene.add(player);
 //
 //
 
-let nBomb = 1;
-
 let bombs = [];
 let explosions = [];
 
@@ -27,7 +25,7 @@ function addExplosion(explosionInstance) {
 }
 
 function addBomb() {
-    nBomb++;
+    GameData.bombAmount++;
 }
 
 //Collision with Circle
@@ -46,6 +44,7 @@ function isPlayerCollidingElement(player, block)
 //Player Action
 function updatePlayer()
 {
+    console.log(`updatePlayer : ${GameData.bombAmount}`)
     //Part of movement/action player
     if(PlayerSetCollision()) return;
 
@@ -53,24 +52,24 @@ function updatePlayer()
 
     switch (direction) {
         case 'up':
-            player.position.y += 0.1;
+            player.position.y += GameData.playerSpeed;
             break;
         case 'left':
-            player.position.x -= 0.1;
+            player.position.x -= GameData.playerSpeed;
             break;
         case 'down':
-            player.position.y -= 0.1;
+            player.position.y -= GameData.playerSpeed;
             break;
         case 'right':
-            player.position.x += 0.1;
+            player.position.x += GameData.playerSpeed;
             break;
         case 'placeBomb':
-            if(nBomb > 0)
+            if( GameData.bombAmount > 0)
             {
-                const bombInstance  = new Bomb(2, player.position, GameData.range);
+                const bombInstance  = new Bomb(2, player.position, GameData.bombRange);
                 scene.add(bombInstance.bomb);
                 bombs.push(bombInstance);
-                nBomb -= 1;
+                GameData.bombAmount -= 1;
             }
             break;
 
