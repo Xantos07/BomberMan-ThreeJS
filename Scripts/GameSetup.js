@@ -20,7 +20,16 @@ const GameData = {
     aiStartPosY: -5,
 
     //Bomb
-    range : 2
+    range : 2,
+
+    //Upgrade
+    BombDownAmount : 2,
+    BombingAmount : 2,
+    BoxingGloveAmount : 2,
+    FireDownAmount : 2,
+    FireAmount : 2,
+    SkateDownAmount : 2,
+    SkateUpAmount : 2,
 };
 
 export {GameData};
