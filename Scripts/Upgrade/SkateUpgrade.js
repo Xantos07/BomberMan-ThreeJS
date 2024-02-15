@@ -3,7 +3,7 @@ import {ressourcesPaths} from "/Scripts/RessourcesPaths.js";
 import {GameData} from "/Scripts/GameSetup.js";
 import {scene} from "/Scripts/Scene.js";
 
-class SkateUpUpgrade extends Upgrade {
+class SkateUpgrade extends Upgrade {
     constructor(position) {
         super(position, ressourcesPaths.skateUpUpgrade);
     }
@@ -15,4 +15,4 @@ class SkateUpUpgrade extends Upgrade {
     }
 }
 
-export { SkateUpUpgrade };
+export { SkateUpgrade };

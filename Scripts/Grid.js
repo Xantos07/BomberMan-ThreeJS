@@ -10,8 +10,7 @@ import {FireUpgrade} from "/Scripts/Upgrade/FireUpgrade.js";
 import {FireDownUpgrade} from "/Scripts/Upgrade/FireDownUpgrade.js";
 import {BombingUpgrade} from "/Scripts/Upgrade/BombingUpgrade.js";
 import {BombDownUpgrade} from "/Scripts/Upgrade/BombDownUpgrade.js";
-import {BombingUpgrade} from "/Scripts/Upgrade/BombingUpgrade.js";
-import {SkateUpUpgrade} from "/Scripts/Upgrade/SkateUpUpgrade.js";
+import {SkateUpgrade} from "/Scripts/Upgrade/SkateUpgrade.js";
 import {SkateDownUpgrade} from "/Scripts/Upgrade/SkateDownUpgrade.js";
 import {BoxingGloveUpgrade} from "/Scripts/Upgrade/BoxingGloveUpgrade.js";
 
@@ -171,7 +170,7 @@ generateUpgrades(FireUpgrade, GameData.FireAmount);
 generateUpgrades(FireDownUpgrade, GameData.FireDownAmount);
 generateUpgrades(BombingUpgrade, GameData.BombingAmount);
 generateUpgrades(BombDownUpgrade, GameData.BombDownAmount);
-generateUpgrades(SkateUpUpgrade, GameData.SkateUpAmount);
+generateUpgrades(SkateUpgrade, GameData.SkateAmount);
 generateUpgrades(SkateDownUpgrade, GameData.SkateDownAmount);
 generateUpgrades(BoxingGloveUpgrade, GameData.BoxingGloveAmount);
 //

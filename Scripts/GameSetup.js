@@ -29,7 +29,7 @@ const GameData = {
     FireDownAmount : 2,
     FireAmount : 2,
     SkateDownAmount : 2,
-    SkateUpAmount : 2,
+    SkateAmount : 2,
 };
 
 export {GameData};
