@@ -96,11 +96,8 @@ function PlayerSetCollision() {
 
             //collision with upgrade
             if (isPlayerCollidingElement(player, tiles[indexX][indexY].upgrade)) {
-
-
                 tiles[indexX][indexY].upgrade.GetUpgrade();
-                //console.log(`upgrade : ${tiles[indexX][indexY].upgrade}`);
-                //tiles[indexX][indexY].upgrade.GetUpdgrade();
+                tiles[indexX][indexY].upgrade = null;
             }
 
             //collision with block

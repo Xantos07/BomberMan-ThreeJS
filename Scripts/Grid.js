@@ -4,7 +4,7 @@ import {GameData} from '/Scripts/GameSetup.js';
 import {Tile} from "/Scripts/Tile.js";
 import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
 import {BreakableBlock} from "/Scripts/BreakableBlock.js";
-import {FireUpgrade} from "/Scripts/FireUpgrade.js";
+import {FireUpgrade} from "/Scripts/Upgrade/FireUpgrade.js";
 
 const blockCountX = GameData.blockCountX;
 const blockCountY = GameData.blockCountY;
