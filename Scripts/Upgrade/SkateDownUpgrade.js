@@ -15,4 +15,4 @@ class SkateDownUpgrade extends Upgrade {
     }
 }
 
-export { SkateDownUpgrade };
+export {SkateDownUpgrade};

@@ -2,9 +2,18 @@ import * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from '/Scripts/Scene.js';
 import {GameData} from '/Scripts/GameSetup.js';
 import {Tile} from "/Scripts/Tile.js";
+//blocks
 import {UnbreakableBlock} from "/Scripts/Unbreakable.js";
 import {BreakableBlock} from "/Scripts/BreakableBlock.js";
+//Upgrades
 import {FireUpgrade} from "/Scripts/Upgrade/FireUpgrade.js";
+import {FireDownUpgrade} from "/Scripts/Upgrade/FireDownUpgrade.js";
+import {BombingUpgrade} from "/Scripts/Upgrade/BombingUpgrade.js";
+import {BombDownUpgrade} from "/Scripts/Upgrade/BombDownUpgrade.js";
+import {BombingUpgrade} from "/Scripts/Upgrade/BombingUpgrade.js";
+import {SkateUpUpgrade} from "/Scripts/Upgrade/SkateUpUpgrade.js";
+import {SkateDownUpgrade} from "/Scripts/Upgrade/SkateDownUpgrade.js";
+import {BoxingGloveUpgrade} from "/Scripts/Upgrade/BoxingGloveUpgrade.js";
 
 const blockCountX = GameData.blockCountX;
 const blockCountY = GameData.blockCountY;
@@ -116,7 +125,7 @@ while (nbBreakableBlock > 0) {
     scene.add(block.block);
 
     nbBreakableBlock -= 1
-    breakableSpace.push([randomElement[0],randomElement[1]]);
+    breakableSpace.push([randomElement[0], randomElement[1]]);
 
     unbreakableBlockList[randomElement[0]][randomElement[1]] = block;
 
@@ -127,32 +136,44 @@ while (nbBreakableBlock > 0) {
     }
 }
 
-//a temporary solution for testing upgrades
-let nbUpgrade = Math.floor(breakableSpace.length * 0.20)
-while (nbUpgrade > 0) {
+//let nbUpgrade = GameData.BombDownAmount;
 
-    const randomIndex = Math.floor(Math.random() * breakableSpace.length);
-    const randomElement = breakableSpace[randomIndex];
+function generateUpgrades(UpgradeType, nbUpgrades) {
 
-    const position = new THREE.Vector3(
-        randomElement[0] * blockSize - (blockCountX * blockSize) / 2 + 0.5,
-        randomElement[1] * blockSize - (blockCountY * blockSize) / 2 + 0.5,
-        0
-    );
+    while (nbUpgrades > 0) {
 
-    const upgrade = new FireUpgrade(position);
-    tiles[randomElement[0]][randomElement[1]].upgrade = upgrade;
-    scene.add(upgrade.upgrade);
+        const randomIndex = Math.floor(Math.random() * breakableSpace.length);
+        const randomElement = breakableSpace[randomIndex];
 
-    nbUpgrade -= 1
+        const position = new THREE.Vector3(
+            randomElement[0] * blockSize - (blockCountX * blockSize) / 2 + 0.5,
+            randomElement[1] * blockSize - (blockCountY * blockSize) / 2 + 0.5,
+            0
+        );
 
-    const indexToRemove = breakableSpace.findIndex(coord => coord[0] === randomElement[0] && coord[1] === randomElement[1]);
+        //const upgrade = new FireUpgrade(position);
+        const upgrade = new UpgradeType(position);
+        tiles[randomElement[0]][randomElement[1]].upgrade = upgrade;
+        scene.add(upgrade.upgrade);
 
-    if (indexToRemove !== -1) {
-        breakableSpace.splice(indexToRemove, 1);
+        nbUpgrades -= 1
+
+        const indexToRemove = breakableSpace.findIndex(coord => coord[0] === randomElement[0] && coord[1] === randomElement[1]);
+
+        if (indexToRemove !== -1) {
+            breakableSpace.splice(indexToRemove, 1);
+        }
+
     }
 }
 
+generateUpgrades(FireUpgrade, GameData.FireAmount);
+generateUpgrades(FireDownUpgrade, GameData.FireDownAmount);
+generateUpgrades(BombingUpgrade, GameData.BombingAmount);
+generateUpgrades(BombDownUpgrade, GameData.BombDownAmount);
+generateUpgrades(SkateUpUpgrade, GameData.SkateUpAmount);
+generateUpgrades(SkateDownUpgrade, GameData.SkateDownAmount);
+generateUpgrades(BoxingGloveUpgrade, GameData.BoxingGloveAmount);
 //
 
 function checkIsOutside(x, y) {
