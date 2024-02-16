@@ -1,6 +1,7 @@
 import  * as THREE from '/node_modules/three/build/three.module.js'
 import { GameData} from '/Scripts/GameSetup.js';
 import { Player} from '/Scripts/Player.js';
+import { AI} from '/Scripts/AI.js';
 import { GetMovementDirection  } from '/Scripts/Input.js';
 import { scene, renderer } from '/Scripts/Scene.js';
 import {camera} from "/Scripts/Camera.js";
@@ -13,9 +14,9 @@ player.position.set(-5,5,0);
 scene.add(player);
 
 //IA Init
-//
-//
-//
+const ai = AI();
+ai.position.set(5,-5,0);
+scene.add(ai);
 
 let bombs = [];
 let explosions = [];
