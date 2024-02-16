@@ -44,7 +44,6 @@ function isPlayerCollidingElement(player, block)
 //Player Action
 function updatePlayer()
 {
-    console.log(`updatePlayer : ${GameData.bombAmount}`)
     //Part of movement/action player
     if(PlayerSetCollision()) return;
 
@@ -66,17 +65,26 @@ function updatePlayer()
         case 'placeBomb':
             if( GameData.bombAmount > 0)
             {
-                const bombInstance  = new Bomb(2, player.position, GameData.bombRange);
-                scene.add(bombInstance.bomb);
-                bombs.push(bombInstance);
-                GameData.bombAmount -= 1;
+                let posXAround = Math.round(player.position.x) + 6;
+                let posYAround = Math.round(player.position.y) + 6;
+
+                if(tiles[posXAround][posYAround].bomb == null)
+                    placeBomb();
             }
             break;
 
     }
 
 }
-
+function placeBomb(){
+    const bombInstance  = new Bomb(2, player.position, GameData.bombRange);
+    scene.add(bombInstance.bomb);
+    bombs.push(bombInstance);
+    let posXAround = Math.round(player.position.x);
+    let posYAround = Math.round(player.position.y);
+    tiles[posXAround + 6][posYAround+ 6].bomb = bombInstance;
+    GameData.bombAmount -= 1;
+}
 function PlayerSetCollision() {
     for (let i = -1; i <= 1; i++) {
 

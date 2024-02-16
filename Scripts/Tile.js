@@ -7,6 +7,7 @@ class Tile {
         this.isEmpty = isEmpty;
         this.block = block;
         this.upgrade = upgrade;
+        this.bomb = null; //The variable checks whether a bomb is present => Upgrade Bomb / Dijkstra algorithme
     }
 }
 
