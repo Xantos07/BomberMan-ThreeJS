@@ -1,21 +1,21 @@
-import  * as THREE from '/node_modules/three/build/three.module.js'
-import { GameData} from '/Scripts/GameSetup.js';
-import { Player} from '/Scripts/Player.js';
-import { GetMovementDirection  } from '/Scripts/Input.js';
-import { scene, renderer } from '/Scripts/Scene.js';
+import * as THREE from '/node_modules/three/build/three.module.js'
+import {GameData} from '/Scripts/GameSetup.js';
+import {Player} from '/Scripts/Player.js';
+import {AI} from '/Scripts/AI/AI.js';
+import {GetMovementDirection} from '/Scripts/Input.js';
+import {scene, renderer} from '/Scripts/Scene.js';
 import {camera} from "/Scripts/Camera.js";
 import {tiles, unbreakableBlockList} from "/Scripts/Grid.js";
 import {Bomb} from "/Scripts/Bomb.js";
 
 //Player Init
 const player = Player();
-player.position.set(-5,5,0);
+player.position.set(-5, 5, 0);
 scene.add(player);
 
 //IA Init
-//
-//
-//
+const ai = new AI({x: 5, y: -5});
+scene.add(ai.ai);
 
 let bombs = [];
 let explosions = [];
@@ -29,23 +29,21 @@ function addBomb() {
 }
 
 //Collision with Circle
-function isPlayerCollidingElement(player, block)
-{
-    if(block == null) return false;
+function isPlayerCollidingElement(player, block) {
+    if (block == null) return false;
 
     const playerPosition = new THREE.Vector3(player.position.x, player.position.y, 0);
     const blockPosition = new THREE.Vector3(block.position.x, block.position.y, 0);
 
     const distance = playerPosition.distanceTo(blockPosition);
 
-    return distance <  0.5 + GameData.blockRadius;
+    return distance < 0.5 + GameData.blockRadius;
 }
 
 //Player Action
-function updatePlayer()
-{
+function updatePlayer() {
     //Part of movement/action player
-    if(PlayerSetCollision()) return;
+    if (PlayerSetCollision()) return;
 
     const direction = GetMovementDirection();
 
@@ -63,12 +61,11 @@ function updatePlayer()
             player.position.x += GameData.playerSpeed;
             break;
         case 'placeBomb':
-            if( GameData.bombAmount > 0)
-            {
+            if (GameData.bombAmount > 0) {
                 let posXAround = Math.round(player.position.x) + 6;
                 let posYAround = Math.round(player.position.y) + 6;
 
-                if(tiles[posXAround][posYAround].bomb == null)
+                if (tiles[posXAround][posYAround].bomb == null)
                     placeBomb();
             }
             break;
@@ -76,28 +73,30 @@ function updatePlayer()
     }
 
 }
-function placeBomb(){
-    const bombInstance  = new Bomb(2, player.position, GameData.bombRange);
+
+function placeBomb() {
+    const bombInstance = new Bomb(2, player.position, GameData.bombRange);
     scene.add(bombInstance.bomb);
     bombs.push(bombInstance);
     let posXAround = Math.round(player.position.x);
     let posYAround = Math.round(player.position.y);
-    tiles[posXAround + 6][posYAround+ 6].bomb = bombInstance;
+    tiles[posXAround + 6][posYAround + 6].bomb = bombInstance;
     GameData.bombAmount -= 1;
 }
+
 function PlayerSetCollision() {
     for (let i = -1; i <= 1; i++) {
 
         let posXAround = Math.round(player.position.x);
         let posYAround = Math.round(player.position.y);
-        let indexX = i +  posXAround + 6;
+        let indexX = i + posXAround + 6;
 
         if (typeof unbreakableBlockList[indexX] === 'undefined') continue;
 
 
         for (let j = -1; j <= 1; j++) {
 
-            let indexY = j +  posYAround + 6;
+            let indexY = j + posYAround + 6;
 
             if (typeof unbreakableBlockList[indexX][indexY] === 'undefined') continue
 
@@ -122,7 +121,7 @@ function PlayerSetCollision() {
 }
 
 
-function BombsTick(){
+function BombsTick() {
 
     bombs = bombs.filter(bomb => bomb.isActive);
 
@@ -131,7 +130,7 @@ function BombsTick(){
     }
 }
 
-function ExplosionsTick(){
+function ExplosionsTick() {
 
     explosions = explosions.filter(explosion => explosion.isActive);
 
@@ -144,16 +143,16 @@ function ExplosionsTick(){
 loop();
 
 //includes all our elements to be displayed and timed
-function loop()
-{
+function loop() {
     requestAnimationFrame(loop);
 
     updatePlayer();
-
+    ai.AIRuntime();
+    
     BombsTick();
     ExplosionsTick();
 
     renderer.render(scene, camera)
 }
 
-export {  addBomb, addExplosion, explosions };
+export {addBomb, addExplosion, explosions};
