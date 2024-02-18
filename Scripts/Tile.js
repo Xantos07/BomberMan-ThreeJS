@@ -11,7 +11,8 @@ class Tile {
 
         this.G = 0;
         this.H = 0;
-        this.F = 0;
+        this.F = this.G + this.H;
+        this.parent = null;
     }
 }
 
