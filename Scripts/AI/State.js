@@ -3,7 +3,7 @@ class State {
     Compute(context) {
     }
 
-    SwitchState(newState) {
+    SwitchState(context) {
     }
 }
 

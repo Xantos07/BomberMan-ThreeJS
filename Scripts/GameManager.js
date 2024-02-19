@@ -155,4 +155,4 @@ function loop() {
     renderer.render(scene, camera)
 }
 
-export {ai,addBomb, addExplosion, explosions};
+export {player,ai,addBomb, addExplosion, explosions};

@@ -103,7 +103,7 @@ emptySpace.splice(emptySpace.findIndex(coord => coord[0] === 11 && coord[1] === 
 emptySpace.splice(emptySpace.findIndex(coord => coord[0] === 11 && coord[1] === 2), 1);
 emptySpace.splice(emptySpace.findIndex(coord => coord[0] === 10 && coord[1] === 1), 1);
 
-let nbBreakableBlock = Math.floor(emptySpace.length * 0.75)
+let nbBreakableBlock = Math.floor(emptySpace.length * 0.25)
 
 //Creation breakable blocks
 while (nbBreakableBlock > 0) {

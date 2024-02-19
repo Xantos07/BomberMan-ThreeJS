@@ -7,7 +7,7 @@ class PlacingBombState extends State {
         console.log("PlacingBomb state")
     }
 
-    SwitchState(newState) {
+    SwitchState(context) {
 
         //Switch state
 

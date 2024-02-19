@@ -9,7 +9,7 @@ class IdleState extends State {
 
     }
 
-    SwitchState(newState) {
+    SwitchState(context) {
 
         //Switch state
         //if()
