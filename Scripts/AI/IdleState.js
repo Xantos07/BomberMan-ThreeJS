@@ -1,7 +1,8 @@
 import {State} from "/Scripts/AI/State.js";
+import {MovingState} from "/Scripts/AI/MovingState.js";
 
 class IdleState extends State {
-    Compute() {
+    Compute(context) {
 
         //Actions of state
         console.log("Idle state")
@@ -11,6 +12,8 @@ class IdleState extends State {
     SwitchState(newState) {
 
         //Switch state
+        //if()
+        return new MovingState();
 
         return this;
     }

@@ -52,7 +52,7 @@ function Path(start, end) {
                 return; //Continue to next iteration
             }
 
-            console.log("neighbour : " + neighbour.x + " / " + neighbour.y)
+            //console.log("neighbour : " + neighbour.x + " / " + neighbour.y)
 
             let costNeighbour = current.G + getDistance(current, neighbour);
 
@@ -61,8 +61,7 @@ function Path(start, end) {
                 neighbour.H = getDistance(neighbour, destinationTile);
                 neighbour.parent = current;
 
-                console.log("neighbour.parent : " + neighbour.x + " / " + neighbour.y + "current : " +
-                    current.x + " / " + current.y )
+                //console.log("neighbour.parent : " + neighbour.x + " / " + neighbour.y + "current : " + current.x + " / " + current.y )
 
                 if (!open.includes(neighbour)) {
                     open.push(neighbour);
@@ -89,9 +88,9 @@ function retracePath(startTile, endTile) {
     path.reverse();
 
     //preview
-   for (let i = 0; i < path.length; i++){
+   /*for (let i = 0; i < path.length; i++){
         console.log("path ", path[i].x, " / ", path[i].y)
-    }
+   }*/
 
     return path;
 }
@@ -137,6 +136,6 @@ function getDistance(nodeA, nodeB) {
     return 14 * dstX + 10 * (dstY - dstX);
 }
 
-console.log(`Path(tiles[5][-5], tiles[-5][5]); : ${Path(tiles[5 + 6][-5 + 6], tiles[-5 + 6][5 + 6])}`);
+//console.log(`Path(tiles[5][-5], tiles[-5][5]); : ${Path(tiles[5 + 6][-5 + 6], tiles[-5 + 6][5 + 6])}`);
 
 export {Path}

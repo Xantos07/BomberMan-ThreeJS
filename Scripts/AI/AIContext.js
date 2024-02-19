@@ -6,6 +6,8 @@ const AIContext = {
     actualPosition: null,
 
     playerPosition: null,
+
+    placeBomb: false,
 };
 
 export {AIContext};

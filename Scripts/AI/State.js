@@ -1,6 +1,6 @@
 class State {
 
-    Compute() {
+    Compute(context) {
     }
 
     SwitchState(newState) {

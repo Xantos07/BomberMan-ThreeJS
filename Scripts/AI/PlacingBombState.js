@@ -1,7 +1,7 @@
 import {State} from "/Scripts/AI/State.js";
 
 class PlacingBombState extends State {
-    Compute() {
+    Compute(context) {
 
         //Actions of state
         console.log("PlacingBomb state")
