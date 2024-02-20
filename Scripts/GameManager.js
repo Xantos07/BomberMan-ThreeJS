@@ -76,11 +76,16 @@ function updatePlayer() {
 
 function placeBomb() {
     const bombInstance = new Bomb(2, player.position, GameData.bombRange);
+
     scene.add(bombInstance.bomb);
     bombs.push(bombInstance);
+
     let posXAround = Math.round(player.position.x);
     let posYAround = Math.round(player.position.y);
+
     tiles[posXAround + 6][posYAround + 6].bomb = bombInstance;
+//Calculate danger tile
+
     GameData.bombAmount -= 1;
 }
 
@@ -155,4 +160,4 @@ function loop() {
     renderer.render(scene, camera)
 }
 
-export {addBomb, addExplosion, explosions};
+export {player,ai,addBomb, addExplosion, explosions};

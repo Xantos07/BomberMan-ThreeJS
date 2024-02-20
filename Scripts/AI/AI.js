@@ -17,6 +17,7 @@ class AI {
 
         this.ai.position.set(position.x, position.y, 0);
         this.ai.add(mesh);
+        this.position = position;
     }
 
 
