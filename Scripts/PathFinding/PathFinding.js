@@ -10,7 +10,9 @@ import {scene} from '/Scripts/Scene.js';
 //H => Distance to ending node
 //F => G + H
 
+
 function getBestOpenTile(open) {
+
     let current = open[0];
 
     for (let i = 1; i < open.length; i++)
@@ -56,7 +58,7 @@ function Path(start, end) {
 
         for (let i = 0; i < neighbours.length; i++) {
 
-            if (!neighbours[i].isEmpty || close.includes(neighbours[i])) {
+            if (!neighbours[i].isEmpty || neighbours[i].bomb || close.includes(neighbours[i])) {
                 continue;
             }
 
@@ -70,13 +72,13 @@ function Path(start, end) {
                 neighbours[i].F = neighbours[i].G + neighbours[i].H;
                 neighbours[i].parent = current;
 
-                /*
+
                 const block = new THREE.Mesh(
                     new THREE.BoxGeometry(1, 1, 1),
                     new THREE.MeshBasicMaterial({ color: 0xFFFF00 })
                 );
                 block.position.set(neighbours[i].x-6, neighbours[i].y-6, 0);
-                scene.add(block);*/
+                scene.add(block);
 
                 if (!open.includes(neighbours[i])) {
 
@@ -104,7 +106,7 @@ function retracePath(startTile, endTile) {
     path.reverse();
 
     //preview
-   /*for (let i = 0; i < path.length; i++){
+   for (let i = 0; i < path.length; i++){
         console.log("path ", path[i].x, " / ", path[i].y)
 
        const block = new THREE.Mesh(
@@ -112,8 +114,9 @@ function retracePath(startTile, endTile) {
            new THREE.MeshBasicMaterial({ color: 0xFF0000 })
        );
        block.position.set(path[i].x-6, path[i].y-6, 0);
+
        scene.add(block);
-   }*/
+   }
 
     return path;
 }

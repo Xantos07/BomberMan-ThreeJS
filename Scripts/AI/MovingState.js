@@ -6,38 +6,42 @@ import {ai} from "/Scripts/GameManager.js";
 import {player} from "/Scripts/GameManager.js";
 import {PlacingBombState} from "/Scripts/AI/PlacingBombState.js";
 
+let paths = [];
+let indexTile = 0;
 class MovingState extends State {
     Compute(context) {
 
         //Actions of state
         //console.log("Moving state")
-
-        // a corriger => Tracer une fois
+        console.log("Moving state")
         const aiPosXAround = Math.round(ai.ai.position.x + 6);
         const aiPosYAround = Math.round(ai.ai.position.y + 6);
         const playerPosXAround = Math.round(player.position.x + 6);
         const playerPosYAround = Math.round(player.position.y + 6);
 
-        const paths = Path(tiles[aiPosXAround][aiPosYAround], tiles[playerPosXAround][playerPosYAround]);
+        if(paths <= 2)
+            paths = Path(tiles[aiPosXAround][aiPosYAround], tiles[playerPosXAround][playerPosYAround]);
 
+        if(indexTile <= paths.length-2) {
+            context.nextPosition = paths[1 + indexTile];
+            context.actualPosition = paths[0 + indexTile];
 
-        context.nextPosition = paths[1];
-        context.actualPosition = paths[0];
+            const dirX = paths[1 + indexTile].x - paths[0 + indexTile].x;
+            const dirY = paths[1 + indexTile].y - paths[0 + indexTile].y;
 
-        const dirX = paths[1].x - paths[0].x;
-        const dirY = paths[1].y - paths[0].y;
+            const dir = new THREE.Vector3(dirX, dirY, 0);
+            // console.log("dir : " + dir);
+            ai.ai.position.y += dir.y * 0.01;
+            ai.ai.position.x += dir.x * 0.01;
 
-        const dir = new THREE.Vector3(dirX, dirY, 0);
-       // console.log("dir : " + dir);
-        ai.ai.position.y += dir.y * 0.01;
-        ai.ai.position.x += dir.x * 0.01;
+            console.log(" paths.length : " + paths.length)
 
-        console.log(" paths.length : " +  paths.length)
-
-        if(IsDestination(ai.ai.position.x + 6, ai.ai.position.y + 6,
-            context.nextPosition.x, context.nextPosition.y) && paths.length <= 2){
+            if (IsDestination(ai.ai.position.x + 6, ai.ai.position.y + 6, context.nextPosition.x, context.nextPosition.y)) {
+                indexTile++;
+            }
+        }else{
             context.placeBomb = true;
-            console.log("Destination PLACE A BOMB !!!!")
+            paths.slice();
         }
     }
 

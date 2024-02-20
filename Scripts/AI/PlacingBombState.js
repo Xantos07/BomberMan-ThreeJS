@@ -1,4 +1,5 @@
 import {State} from "/Scripts/AI/State.js";
+import {MovingState} from "/Scripts/AI/MovingState.js";
 
 class PlacingBombState extends State {
     Compute(context) {
@@ -11,7 +12,7 @@ class PlacingBombState extends State {
 
         //Switch state
 
-        return this;
+        return new MovingState();
     }
 }
 
