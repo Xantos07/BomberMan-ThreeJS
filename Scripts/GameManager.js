@@ -84,7 +84,6 @@ function placeBomb() {
     let posYAround = Math.round(player.position.y);
 
     tiles[posXAround + 6][posYAround + 6].bomb = bombInstance;
-//Calculate danger tile
 
     GameData.bombAmount -= 1;
 }
