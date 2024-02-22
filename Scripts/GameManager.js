@@ -27,6 +27,9 @@ function addExplosion(explosionInstance) {
 function addBomb() {
     GameData.bombAmount++;
 }
+function pushBombs(bombInstance) {
+    bombs.push(bombInstance);
+}
 
 //Collision with Circle
 function isPlayerCollidingElement(player, block) {
@@ -159,4 +162,4 @@ function loop() {
     renderer.render(scene, camera)
 }
 
-export {player,ai,addBomb, addExplosion, explosions};
+export {pushBombs,player,ai,addBomb, addExplosion, explosions};

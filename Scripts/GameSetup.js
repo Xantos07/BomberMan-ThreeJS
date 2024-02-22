@@ -22,7 +22,12 @@ const GameData = {
     aiStartPosX: 5,
     aiStartPosY: -5,
 
-    //Bomb
+    //BombAI
+    aiBombAmount : 1,
+    aiBombRange : 2,
+    //
+
+    //BombPlayer
     bombAmount : 1,
     bombRange : 2,
     //
