@@ -50,6 +50,7 @@ class Explosion {
                     tiles.isEmpty = true;
                     tiles[tile.x][tile.y].block = null;
                     unbreakableBlockList[tile.x][tile.y] = null;
+                    this.tilesDanger.push(tiles[tile.x][tile.y]);
                     break;
                 }
 
@@ -67,6 +68,7 @@ class Explosion {
         this.isActive = true;
         this.lastTime = Date.now();
         this.cooldown = initCooldown;
+        this.tilesDanger = [];
     }
 
     ExplosionCoolDown() {
@@ -78,6 +80,9 @@ class Explosion {
         this.cooldown -= deltaTime;
 
         if (this.cooldown <= 0) {
+
+            this.tilesDanger.forEach((tile) => {tile.danger = 0})
+
             this.isActive = false;
             scene.remove(this.explosion);
             this.explosion = null;

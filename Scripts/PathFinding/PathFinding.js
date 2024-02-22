@@ -72,13 +72,13 @@ function Path(start, end) {
                 neighbours[i].F = neighbours[i].G + neighbours[i].H;
                 neighbours[i].parent = current;
 
-
+/*
                 const block = new THREE.Mesh(
                     new THREE.BoxGeometry(1, 1, 1),
                     new THREE.MeshBasicMaterial({ color: 0xFFFF00 })
                 );
                 block.position.set(neighbours[i].x-6, neighbours[i].y-6, 0);
-                scene.add(block);
+                scene.add(block);*/
 
                 if (!open.includes(neighbours[i])) {
 
@@ -106,6 +106,7 @@ function retracePath(startTile, endTile) {
     path.reverse();
 
     //preview
+    /*
    for (let i = 0; i < path.length; i++){
         console.log("path ", path[i].x, " / ", path[i].y)
 
@@ -117,7 +118,7 @@ function retracePath(startTile, endTile) {
 
        scene.add(block);
    }
-
+*/
     return path;
 }
 

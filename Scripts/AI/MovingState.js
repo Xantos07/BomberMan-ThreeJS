@@ -13,7 +13,7 @@ class MovingState extends State {
 
         //Actions of state
         //console.log("Moving state")
-        console.log("Moving state")
+        //console.log("Moving state")
         const aiPosXAround = Math.round(ai.ai.position.x + 6);
         const aiPosYAround = Math.round(ai.ai.position.y + 6);
         const playerPosXAround = Math.round(player.position.x + 6);
@@ -34,7 +34,7 @@ class MovingState extends State {
             ai.ai.position.y += dir.y * 0.01;
             ai.ai.position.x += dir.x * 0.01;
 
-            console.log(" paths.length : " + paths.length)
+           // console.log(" paths.length : " + paths.length)
 
             if (IsDestination(ai.ai.position.x + 6, ai.ai.position.y + 6, context.nextPosition.x, context.nextPosition.y)) {
                 indexTile++;
