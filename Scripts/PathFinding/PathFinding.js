@@ -58,7 +58,7 @@ function Path(start, end) {
 
         for (let i = 0; i < neighbours.length; i++) {
 
-            if (!neighbours[i].isEmpty || neighbours[i].bomb || close.includes(neighbours[i])) {
+            if (!neighbours[i].isEmpty || neighbours[i].danger >= 3 || neighbours[i].bomb || close.includes(neighbours[i])) {
                 continue;
             }
 
