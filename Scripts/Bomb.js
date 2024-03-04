@@ -1,11 +1,11 @@
 import  * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from "/Scripts/Scene.js";
 import {Explosion} from "/Scripts/Explosion.js";
-import {addExplosion, addBomb, player} from "/Scripts/GameManager.js";
+import {addExplosion, addBombPlayer, addBombAI, player, ai} from "/Scripts/GameManager.js";
 import {checkIsOutside, tiles} from "/Scripts/Grid.js";
 
 class Bomb {
-    constructor(initCooldown, position, range) {
+    constructor(initCooldown, position, range, controller) {
 
         this.bomb = new THREE.Group();
 
@@ -19,6 +19,7 @@ class Bomb {
         this.posYAround = Math.round(position.y);
 
         this.range = range;
+        this.controller = controller;
         this.isActive = true;
         this.position = bombMesh.position;
         this.bomb.add(bombMesh);
@@ -77,7 +78,13 @@ class Bomb {
             scene.add(explosionInstance.explosion);
 
             addExplosion(explosionInstance);
-            addBomb();
+
+            if(this.controller == player) {
+                addBombPlayer();
+            }
+            if(this.controller == ai) {
+                addBombAI();
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ class PlacingBombState extends State {
     }
 }
 function placeBomb() {
-    const bombInstance = new Bomb(2, ai.ai.position, GameData.bombRange);
+    const bombInstance = new Bomb(2, ai.ai.position, GameData.bombRange, ai);
 
     scene.add(bombInstance.bomb);
     pushBombs(bombInstance);
@@ -41,4 +41,5 @@ function placeBomb() {
 
     GameData.bombAmount = 1;
 }
+
 export {PlacingBombState}

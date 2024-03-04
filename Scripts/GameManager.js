@@ -23,8 +23,10 @@ let explosions = [];
 function addExplosion(explosionInstance) {
     explosions.push(explosionInstance);
 }
-
-function addBomb() {
+function addBombAI() {
+    GameData.aiBombAmount++;
+}
+function addBombPlayer() {
     GameData.bombAmount++;
 }
 function pushBombs(bombInstance) {
@@ -78,7 +80,7 @@ function updatePlayer() {
 }
 
 function placeBomb() {
-    const bombInstance = new Bomb(2, player.position, GameData.bombRange);
+    const bombInstance = new Bomb(2, player.position, GameData.bombRange, player);
 
     scene.add(bombInstance.bomb);
     bombs.push(bombInstance);
@@ -162,4 +164,4 @@ function loop() {
     renderer.render(scene, camera)
 }
 
-export {pushBombs,player,ai,addBomb, addExplosion, explosions};
+export {pushBombs,player,ai,addBombPlayer,addBombAI, addExplosion, explosions};

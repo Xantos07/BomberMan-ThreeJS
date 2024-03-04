@@ -2,6 +2,7 @@ import * as THREE from '/node_modules/three/build/three.module.js'
 import {State} from "/Scripts/AI/State.js";
 import {Path} from "/Scripts/PathFinding/PathFinding.js";
 import {tiles} from "/Scripts/Grid.js";
+import {GameData} from '/Scripts/GameSetup.js';
 import {ai} from "/Scripts/GameManager.js";
 import {player} from "/Scripts/GameManager.js";
 import {PlacingBombState} from "/Scripts/AI/PlacingBombState.js";
@@ -56,8 +57,13 @@ class MovingState extends State {
 
     SwitchState(context) {
 
+        const aiPosXAround = Math.round(ai.ai.position.x + 6);
+        const aiPosYAround = Math.round(ai.ai.position.y + 6);
+
+        console.log(" GameData.aiBombAmount : " + GameData.aiBombAmount)
         //Switch state
-        if( context.placeBomb){
+        if(context.placeBomb && GameData.aiBombAmount > 0 && tiles[aiPosXAround][aiPosYAround].bomb == null){
+            GameData.aiBombAmount--;
             return new PlacingBombState();
         }
         return this;
