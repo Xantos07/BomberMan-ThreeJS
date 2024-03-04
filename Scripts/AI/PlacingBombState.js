@@ -10,7 +10,7 @@ class PlacingBombState extends State {
     Compute(context) {
 
         //Actions of state
-        console.log("PlacingBomb state")
+        //console.log("PlacingBomb state")
 
         if (GameData.aiBombRange > 0) {
             let posXAround = Math.round(ai.ai.position.x) + 6;

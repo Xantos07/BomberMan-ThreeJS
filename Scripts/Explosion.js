@@ -24,6 +24,12 @@ class Explosion {
             { dirX: 0, dirY: -1 }  // Down
         ];
 
+
+        this.isActive = true;
+        this.lastTime = Date.now();
+        this.cooldown = initCooldown;
+        this.tilesDanger = [];
+
         for (const dir of directions) {
             let dirX = dir.dirX;
             let dirY = dir.dirY;
@@ -63,12 +69,6 @@ class Explosion {
                 this.explosion.add(explosionMesh);
             }
         }
-
-
-        this.isActive = true;
-        this.lastTime = Date.now();
-        this.cooldown = initCooldown;
-        this.tilesDanger = [];
     }
 
     ExplosionCoolDown() {
