@@ -53,10 +53,10 @@ class Explosion {
                     tile.block.Break();
 
                     //Refresh Data
-                    tiles.isEmpty = true;
-                    tiles[tile.x][tile.y].block = null;
+                    tile.isEmpty = true;
+                    tile.block = null;
                     unbreakableBlockList[tile.x][tile.y] = null;
-                    this.tilesDanger.push(tiles[tile.x][tile.y]);
+                    //this.tilesDanger.push(tiles[tile.x][tile.y]);
                     break;
                 }
 
@@ -66,6 +66,7 @@ class Explosion {
                 );
 
                 explosionMesh.position.set(posX, posY, 0);
+                this.tilesDanger.push(tiles[tile.x][tile.y]);
                 this.explosion.add(explosionMesh);
             }
         }
@@ -81,7 +82,7 @@ class Explosion {
 
         if (this.cooldown <= 0) {
 
-            this.tilesDanger.forEach((tile) => {tile.danger = 0})
+            this.tilesDanger.forEach((tile) => {tile.danger = 0;})
 
             this.isActive = false;
             scene.remove(this.explosion);

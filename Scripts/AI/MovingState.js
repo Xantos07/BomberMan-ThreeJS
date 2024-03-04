@@ -17,6 +17,7 @@ class MovingState extends State {
 
         const aiPosXAround = Math.round(ai.ai.position.x + 6);
         const aiPosYAround = Math.round(ai.ai.position.y + 6);
+
         const playerPosXAround = Math.round(player.position.x + 6);
         const playerPosYAround = Math.round(player.position.y + 6);
 
@@ -48,8 +49,10 @@ class MovingState extends State {
                 indexTile++;
             }
         }else{
-            console.log(`Je ne peux plus avancer`);
-            context.placeBomb = true;
+            if(Path(tiles[aiPosXAround][aiPosYAround], tiles[playerPosXAround][playerPosYAround]).length > 2) {
+                context.placeBomb = true;
+            }
+
             paths = [];
             indexTile = 0;
         }
@@ -60,9 +63,11 @@ class MovingState extends State {
         const aiPosXAround = Math.round(ai.ai.position.x + 6);
         const aiPosYAround = Math.round(ai.ai.position.y + 6);
 
-        console.log(" GameData.aiBombAmount : " + GameData.aiBombAmount)
         //Switch state
-        if(context.placeBomb && GameData.aiBombAmount > 0 && tiles[aiPosXAround][aiPosYAround].bomb == null){
+        if(context.placeBomb && GameData.aiBombAmount > 0 &&
+            tiles[aiPosXAround][aiPosYAround].bomb == null &&
+            tiles[aiPosXAround][aiPosYAround].danger == 0){
+
             GameData.aiBombAmount--;
             return new PlacingBombState();
         }

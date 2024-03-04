@@ -1,6 +1,6 @@
 import {checkIsOutside, tiles} from "/Scripts/Grid.js";
 import * as THREE from '/node_modules/three/build/three.module.js'
-import {scene} from '/Scripts/Scene.js';
+import {scene, renderer} from '/Scripts/Scene.js';
 
 //Take Start Tile and Destination Tile
 //returns Tiles[,] to destination or nearest destination
@@ -10,6 +10,7 @@ import {scene} from '/Scripts/Scene.js';
 //H => Distance to ending node
 //F => G + H
 
+let drawTiles = []
 
 function getBestOpenTile(open) {
 
@@ -20,7 +21,6 @@ function getBestOpenTile(open) {
         open[i].F = open[i].G + open[i].H;
         current.F = current.G + current.H;
 
-        console.log("open[i].F :  " + open[i].F + " < " +current.F);
         if (open[i].F <= current.F) {
             if (open[i].H < current.H)
                 current = open[i];
@@ -32,6 +32,9 @@ function getBestOpenTile(open) {
 
 function Path(start, end) {
 
+    resetTilePath();
+    drawTiles.forEach((drawTile) => {scene.remove(drawTile)})
+
     const startTile= start;
     const destinationTile = end;
 
@@ -40,10 +43,10 @@ function Path(start, end) {
 
     open.push(startTile);
     let  current;
+
     while (open.length > 0) {
 
         current = getBestOpenTile(open);
-
 
         open.splice(open.indexOf(current), 1);
         close.push(current);
@@ -58,11 +61,10 @@ function Path(start, end) {
 
         for (let i = 0; i < neighbours.length; i++) {
 
-            if (!neighbours[i].isEmpty || neighbours[i].danger >= 3 || neighbours[i].bomb || close.includes(neighbours[i])) {
+            // isEmpyt est toujours faux lorsque c est l ia !!
+            if (!neighbours[i].isEmpty || neighbours[i].danger >= 0.1 || neighbours[i].bomb || close.includes(neighbours[i])) {
                 continue;
             }
-
-            //console.log("neighbour : " + neighbour.x + " / " + neighbour.y)
 
             let costNeighbour = current.G + getDistance(current, neighbours[i]);
 
@@ -72,13 +74,14 @@ function Path(start, end) {
                 neighbours[i].F = neighbours[i].G + neighbours[i].H;
                 neighbours[i].parent = current;
 
-/*
+
                 const block = new THREE.Mesh(
-                    new THREE.BoxGeometry(1, 1, 1),
+                    new THREE.BoxGeometry(0.1, 0.1, 0.1),
                     new THREE.MeshBasicMaterial({ color: 0xFFFF00 })
                 );
                 block.position.set(neighbours[i].x-6, neighbours[i].y-6, 0);
-                scene.add(block);*/
+                drawTiles.push(block);
+                scene.add(block);
 
                 if (!open.includes(neighbours[i])) {
 
@@ -88,7 +91,6 @@ function Path(start, end) {
         }
     }
 
-    console.log("Aucun chemin trouvé");
     return retracePath(startTile, current);
 }
 
@@ -106,19 +108,18 @@ function retracePath(startTile, endTile) {
     path.reverse();
 
     //preview
-    /*
+
    for (let i = 0; i < path.length; i++){
-        console.log("path ", path[i].x, " / ", path[i].y)
 
        const block = new THREE.Mesh(
-           new THREE.BoxGeometry(1, 1, 1),
+           new THREE.BoxGeometry(0.2, 0.2, 0.2),
            new THREE.MeshBasicMaterial({ color: 0xFF0000 })
        );
        block.position.set(path[i].x-6, path[i].y-6, 0);
-
+       drawTiles.push(block);
        scene.add(block);
    }
-*/
+
     return path;
 }
 
@@ -160,6 +161,14 @@ function getDistance(nodeA, nodeB) {
     }
 
     return 14 * dstX + 10 * (dstY - dstX);
+}
+
+function resetTilePath(){
+    tiles.forEach(tile => {
+       tile.F = 0;
+       tile.G = 0;
+       tile.H = 0;
+    });
 }
 
 //console.log(`Path(tiles[5][-5], tiles[-5][5]); : ${Path(tiles[5 + 6][-5 + 6], tiles[-5 + 6][5 + 6])}`);
