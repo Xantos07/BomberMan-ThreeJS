@@ -24,6 +24,12 @@ class Explosion {
             { dirX: 0, dirY: -1 }  // Down
         ];
 
+
+        this.isActive = true;
+        this.lastTime = Date.now();
+        this.cooldown = initCooldown;
+        this.tilesDanger = [];
+
         for (const dir of directions) {
             let dirX = dir.dirX;
             let dirY = dir.dirY;
@@ -47,10 +53,10 @@ class Explosion {
                     tile.block.Break();
 
                     //Refresh Data
-                    tiles.isEmpty = true;
-                    tiles[tile.x][tile.y].block = null;
+                    tile.isEmpty = true;
+                    tile.block = null;
                     unbreakableBlockList[tile.x][tile.y] = null;
-                    this.tilesDanger.push(tiles[tile.x][tile.y]);
+                    //this.tilesDanger.push(tiles[tile.x][tile.y]);
                     break;
                 }
 
@@ -60,15 +66,10 @@ class Explosion {
                 );
 
                 explosionMesh.position.set(posX, posY, 0);
+                this.tilesDanger.push(tiles[tile.x][tile.y]);
                 this.explosion.add(explosionMesh);
             }
         }
-
-
-        this.isActive = true;
-        this.lastTime = Date.now();
-        this.cooldown = initCooldown;
-        this.tilesDanger = [];
     }
 
     ExplosionCoolDown() {
@@ -81,7 +82,7 @@ class Explosion {
 
         if (this.cooldown <= 0) {
 
-            this.tilesDanger.forEach((tile) => {tile.danger = 0})
+            this.tilesDanger.forEach((tile) => {tile.danger = 0;})
 
             this.isActive = false;
             scene.remove(this.explosion);

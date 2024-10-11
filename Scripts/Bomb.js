@@ -1,24 +1,25 @@
-import  * as THREE from '/node_modules/three/build/three.module.js'
+import * as THREE from '/node_modules/three/build/three.module.js'
 import {scene} from "/Scripts/Scene.js";
 import {Explosion} from "/Scripts/Explosion.js";
-import {addExplosion, addBomb, player} from "/Scripts/GameManager.js";
+import {addExplosion, addBombPlayer, addBombAI, player, ai} from "/Scripts/GameManager.js";
 import {checkIsOutside, tiles} from "/Scripts/Grid.js";
 
 class Bomb {
-    constructor(initCooldown, position, range) {
+    constructor(initCooldown, position, range, controller) {
 
         this.bomb = new THREE.Group();
 
         const bombMesh = new THREE.Mesh(
             new THREE.BoxGeometry(0.5, 0.5, 0.5),
-            new THREE.MeshBasicMaterial({ color: 0xEB6C68 })
+            new THREE.MeshBasicMaterial({color: 0xEB6C68})
         );
-        bombMesh.position.set(position.x,position.y,0);
+        bombMesh.position.set(position.x, position.y, 0);
 
         this.posXAround = Math.round(position.x);
         this.posYAround = Math.round(position.y);
 
         this.range = range;
+        this.controller = controller;
         this.isActive = true;
         this.position = bombMesh.position;
         this.bomb.add(bombMesh);
@@ -29,10 +30,10 @@ class Bomb {
 
         //Calculate danger tile
         const directions = [
-            { dirX: 1, dirY: 0 },  // Right
-            { dirX: -1, dirY: 0 }, // Left
-            { dirX: 0, dirY: 1 },  // Up
-            { dirX: 0, dirY: -1 }  // Down
+            {dirX: 1, dirY: 0},  // Right
+            {dirX: -1, dirY: 0}, // Left
+            {dirX: 0, dirY: 1},  // Up
+            {dirX: 0, dirY: -1}  // Down
         ];
 
         for (const dir of directions) {
@@ -47,7 +48,7 @@ class Bomb {
                     break;
                 }
 
-                this.tilesDanger.push(tiles[posX,posY]);
+                this.tilesDanger.push(tiles[posX][posY]);
             }
         }
     }
@@ -61,9 +62,11 @@ class Bomb {
         this.cooldown -= deltaTime;
 
         //4 => danger max
-        let danger = (1 - this.cooldown / this.initCooldown) * 4 ;
+        let danger = (1 - this.cooldown / this.initCooldown) * 4;
 
-        this.tilesDanger.forEach(tile => {tile.danger = danger ;});
+        this.tilesDanger.forEach(tile => {
+            tile.danger = danger;
+        });
 
         if (this.cooldown <= 0) {
 
@@ -71,15 +74,21 @@ class Bomb {
             this.bomb = null;
             this.isActive = false;
 
-            tiles[this.posXAround + 6][this.posYAround+ 6].bomb = null;
+            tiles[this.posXAround + 6][this.posYAround + 6].bomb = null;
 
-            const explosionInstance  = new Explosion(2, this.position, this.range);
+            const explosionInstance = new Explosion(2, this.position, this.range);
             scene.add(explosionInstance.explosion);
 
             addExplosion(explosionInstance);
-            addBomb();
+
+            if (this.controller == player) {
+                addBombPlayer();
+            }
+            if (this.controller == ai) {
+                addBombAI();
+            }
         }
     }
 }
 
-export { Bomb };
+export {Bomb};

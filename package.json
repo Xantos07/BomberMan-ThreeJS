@@ -1,5 +1,13 @@
+
 {
+  "name": "bomberman-threejs",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite"  
+  },
   "dependencies": {
-    "three": "^0.161.0"
-  }
+    "three": "^0.161.0"  },
+    "devDependencies": {
+      "vite": "^5.4.8"
+    }
 }

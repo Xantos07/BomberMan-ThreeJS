@@ -25,10 +25,11 @@ class AI {
 
         //Detection
         //
-
         //RunAction
-        currentState = currentState.SwitchState(context);
-        currentState.Compute(context);
+
+        //Reactive
+        //currentState = currentState.SwitchState(context);
+        //currentState.Compute(context);
     }
 
 }

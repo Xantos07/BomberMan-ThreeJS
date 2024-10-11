@@ -2,6 +2,7 @@ import * as THREE from '/node_modules/three/build/three.module.js'
 import {State} from "/Scripts/AI/State.js";
 import {Path} from "/Scripts/PathFinding/PathFinding.js";
 import {tiles} from "/Scripts/Grid.js";
+import {GameData} from '/Scripts/GameSetup.js';
 import {ai} from "/Scripts/GameManager.js";
 import {player} from "/Scripts/GameManager.js";
 import {PlacingBombState} from "/Scripts/AI/PlacingBombState.js";
@@ -13,21 +14,29 @@ class MovingState extends State {
 
         //Actions of state
         //console.log("Moving state")
-        //console.log("Moving state")
+
         const aiPosXAround = Math.round(ai.ai.position.x + 6);
         const aiPosYAround = Math.round(ai.ai.position.y + 6);
+
         const playerPosXAround = Math.round(player.position.x + 6);
         const playerPosYAround = Math.round(player.position.y + 6);
 
-        if(paths <= 2)
+        //Check / tile
+        if(paths.length == 0) {
             paths = Path(tiles[aiPosXAround][aiPosYAround], tiles[playerPosXAround][playerPosYAround]);
+        }
+
+
+        if(paths.length == 0) {
+           return;
+        }
 
         if(indexTile <= paths.length-2) {
-            context.nextPosition = paths[1 + indexTile];
-            context.actualPosition = paths[0 + indexTile];
+            context.nextPosition = paths[indexTile + 1];
+            context.actualPosition = paths[indexTile];
 
-            const dirX = paths[1 + indexTile].x - paths[0 + indexTile].x;
-            const dirY = paths[1 + indexTile].y - paths[0 + indexTile].y;
+            const dirX = context.nextPosition.x - context.actualPosition.x;
+            const dirY = context.nextPosition.y - context.actualPosition.y;
 
             const dir = new THREE.Vector3(dirX, dirY, 0);
             // console.log("dir : " + dir);
@@ -40,15 +49,26 @@ class MovingState extends State {
                 indexTile++;
             }
         }else{
-            context.placeBomb = true;
-            paths.slice();
+            if(Path(tiles[aiPosXAround][aiPosYAround], tiles[playerPosXAround][playerPosYAround]).length > 2) {
+                context.placeBomb = true;
+            }
+
+            paths = [];
+            indexTile = 0;
         }
     }
 
     SwitchState(context) {
 
+        const aiPosXAround = Math.round(ai.ai.position.x + 6);
+        const aiPosYAround = Math.round(ai.ai.position.y + 6);
+
         //Switch state
-        if( context.placeBomb){
+        if(context.placeBomb && GameData.aiBombAmount > 0 &&
+            tiles[aiPosXAround][aiPosYAround].bomb == null &&
+            tiles[aiPosXAround][aiPosYAround].danger == 0){
+
+            GameData.aiBombAmount--;
             return new PlacingBombState();
         }
         return this;
